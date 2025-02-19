@@ -101,8 +101,6 @@ class BrowserNetworkObservable {
     target: (url: string, config: any) => Promise<Response>,
     filters?: WithFilters
   ) {
-    console.log('args : ', args)
-
     const [url, config] = args
     let time2 = 0
     const time1 = performance.now()
@@ -158,11 +156,10 @@ class BrowserNetworkObservable {
 
   #onDestroy() {
     window.fetch = this.#initialFetch
+    window.XMLHttpRequest = this.#initialXMLHttpRequest
   }
 
   #bindExecute = (filters?: WithFilters) => {
-    console.log('TESTE')
-
     this.#onComplete(filters)
   }
 }
