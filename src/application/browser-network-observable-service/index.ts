@@ -32,12 +32,8 @@ export class BrowserNetworkObservableService {
   }
 
   destroy() {
-    this.#service.destroy()
+    const destroied = this.#service.destroy()
 
-    const values = Array.from(this.#service.cache.values())
-
-    console.log('Browser Network Observable: --> ', values)
-
-    return values
+    return destroied
   }
 }

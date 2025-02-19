@@ -21,7 +21,7 @@ class BrowserNetworkObservable {
   }
 
   destroy() {
-    this.#onDestroy()
+    return this.#onDestroy()
   }
 
   #onComplete = (filters?: WithFilters) => {
@@ -157,6 +157,12 @@ class BrowserNetworkObservable {
   #onDestroy() {
     window.fetch = this.#initialFetch
     window.XMLHttpRequest = this.#initialXMLHttpRequest
+    const values = Array.from(this.cache.values())
+    console.log('Browser Network Observable: --> ', values)
+
+    this.cache.clear()
+
+    return values
   }
 
   #bindExecute = (filters?: WithFilters) => {
