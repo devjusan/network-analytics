@@ -1,7 +1,9 @@
 import { NetworkObservableResponse } from '../../models/response'
 
 export type WithFilters = {
+  /** Time in milliseconds */
   timeShouldBeHigherThan?: number
+  /** Time in milliseconds */
   timeShouldBeLowerThan?: number
   statusShouldBe?: number
   urlShouldBe?: string
@@ -61,7 +63,8 @@ class NetworkObservable {
         }
 
         this.cache.set(url, {
-          ...response,
+          url,
+          status: response.status,
           time: time2 - time1
         })
 

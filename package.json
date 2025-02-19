@@ -1,7 +1,7 @@
 {
   "name": "network-analytics-test",
   "type": "module",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "private": false,
   "packageManager": "pnpm@9.1.0",
   "description": "Observe your browser network tab and get insights",

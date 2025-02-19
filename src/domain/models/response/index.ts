@@ -1,4 +1,6 @@
-export type NetworkObservableResponse = Response & {
+export type NetworkObservableResponse = {
   /** Time in milliseconds */
   time: number
+  status: number
+  url: string
 }
