@@ -24,13 +24,15 @@ export class BrowserNetworkObservableService {
     }
 
     this.#service.execute(options?.withFilters)
-
-    return Array.from(this.#service.cache.values())
   }
 
   destroy() {
     this.#service.destroy()
 
-    return Array.from(this.#service.cache.values())
+    const values = Array.from(this.#service.cache.values())
+
+    console.log('Browser Network Observable: --> ', values)
+
+    return values
   }
 }

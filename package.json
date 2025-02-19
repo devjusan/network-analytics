@@ -1,7 +1,7 @@
 {
   "name": "browser-network-observable",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.11",
   "private": false,
   "packageManager": "pnpm@9.1.0",
   "description": "Observe your browser network tab and get insights",
