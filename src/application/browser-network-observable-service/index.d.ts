@@ -1,4 +1,4 @@
-import { WithFilters } from '../../domain/entities/network-observable'
+import { WithFilters } from '../../domain/entities/browser-network-observable'
 import { InputSetOptions } from '../utils/input-setter'
 export declare type ServiceOptions = {
   /** Service will be executed after fill inputs */

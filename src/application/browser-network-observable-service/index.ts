@@ -1,4 +1,6 @@
-import NetworkObservable, { WithFilters } from '../../domain/entities/network-observable'
+import BrowserNetworkObservable, {
+  WithFilters
+} from '../../domain/entities/browser-network-observable'
 import InputSetter, { InputSetOptions } from '../utils/input-setter'
 
 export type ServiceOptions = {
@@ -7,8 +9,8 @@ export type ServiceOptions = {
   withFilters?: WithFilters
 }
 
-export class NetworkObservableService {
-  readonly #service = new NetworkObservable()
+export class BrowserNetworkObservableService {
+  readonly #service = new BrowserNetworkObservable()
 
   /** `execute` method starts to observe the network with the given options.
    *

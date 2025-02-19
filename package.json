@@ -1,7 +1,7 @@
 {
-  "name": "network-analytics-test",
+  "name": "browser-network-observble",
   "type": "module",
-  "version": "0.0.7",
+  "version": "0.0.1",
   "private": false,
   "packageManager": "pnpm@9.1.0",
   "description": "Observe your browser network tab and get insights",
@@ -22,7 +22,7 @@
     "build": "pnpm run build-only",
     "build-only": "node ./scripts/build.js && tsc --emitDeclarationOnly",
     "format": "prettier --write src/",
-    "publish": "pnpm run build && pnpm publish --recursive --tag latest"
+    "publish": "pnpm run build && pnpm publish"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.4.0",

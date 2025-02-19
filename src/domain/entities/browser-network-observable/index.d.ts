@@ -1,4 +1,4 @@
-import { NetworkObservableResponse } from '../../models/response'
+import { BrowserNetworkObservableResponse } from '../../models/response'
 export declare type WithFilters = {
   timeShouldBeHigherThan?: number
   timeShouldBeLowerThan?: number
@@ -7,7 +7,7 @@ export declare type WithFilters = {
 }
 declare class NetworkObservable {
   #private
-  readonly cache: Map<string, NetworkObservableResponse>
+  readonly cache: Map<string, BrowserNetworkObservableResponse>
   constructor()
   execute(filters?: WithFilters): void
   destroy(): void

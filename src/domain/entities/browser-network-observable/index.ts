@@ -1,4 +1,4 @@
-import { NetworkObservableResponse } from '../../models/response'
+import { BrowserNetworkObservableResponse } from '../../models/response'
 
 export type WithFilters = {
   /** Time in milliseconds */
@@ -9,8 +9,8 @@ export type WithFilters = {
   urlShouldBe?: string
 }
 
-class NetworkObservable {
-  readonly cache: Map<string, NetworkObservableResponse> = new Map()
+class BrowserNetworkObservable {
+  readonly cache: Map<string, BrowserNetworkObservableResponse> = new Map()
   #initialFetch = window.fetch
 
   constructor() {}
@@ -98,4 +98,4 @@ class NetworkObservable {
   }
 }
 
-export default NetworkObservable
+export default BrowserNetworkObservable

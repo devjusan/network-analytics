@@ -1,6 +1,9 @@
-import { NetworkObservableService, ServiceOptions } from './application/network-observable-service'
+import {
+  BrowserNetworkObservableService,
+  ServiceOptions
+} from './application/browser-network-observable-service'
 
-const service = new NetworkObservableService()
+export const service = new BrowserNetworkObservableService()
 
 export default {
   start: (options?: ServiceOptions) => service.execute(options),
