@@ -7,6 +7,11 @@ export type ServiceOptions = {
   /** Service will be executed after fill inputs */
   withFillInputs?: Array<InputSetOptions>
   withFilters?: WithFilters
+  /**
+   * Unique identifier for the service.
+   * We will use this id to only show the network requests for this service.
+   */
+  id?: string
 }
 
 export class BrowserNetworkObservableService {

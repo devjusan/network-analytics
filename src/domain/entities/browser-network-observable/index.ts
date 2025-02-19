@@ -12,14 +12,12 @@ export type WithFilters = {
 class BrowserNetworkObservable {
   readonly cache: Map<string, BrowserNetworkObservableResponse> = new Map()
   #initialFetch = window.fetch
+  #initialXMLHttpRequest = window.XMLHttpRequest
 
   constructor() {}
 
   execute(filters?: WithFilters) {
-    window.document.addEventListener(
-      'readystatechange',
-      this.#onReadyStateChange.bind(this, filters)
-    )
+    this.#bindExecute(filters)
   }
 
   destroy() {
@@ -27,74 +25,145 @@ class BrowserNetworkObservable {
   }
 
   #onComplete = (filters?: WithFilters) => {
-    window.fetch = new Proxy(window.fetch, {
-      apply: async (target, _, args) => {
-        const [url, config] = args
-        let time2 = 0
-        const time1 = performance.now()
-        const response = await target(url, config).finally(() => {
-          time2 = performance.now()
-        })
-
-        if (filters) {
-          if (filters.timeShouldBeHigherThan) {
-            if (time2 - time1 < filters.timeShouldBeHigherThan) {
-              return response
-            }
-          }
-
-          if (filters.timeShouldBeLowerThan) {
-            if (time2 - time1 > filters.timeShouldBeLowerThan) {
-              return response
-            }
-          }
-
-          if (filters.statusShouldBe) {
-            if (response.status !== filters.statusShouldBe) {
-              return response
-            }
-          }
-
-          if (filters.urlShouldBe) {
-            if (url !== filters.urlShouldBe) {
-              return response
-            }
-          }
+    try {
+      window.fetch = new Proxy(window.fetch, {
+        apply: async (target, _, args) => {
+          return this.#requestWrapper(args, target, filters)
         }
+      })
 
-        this.cache.set(url, {
-          url,
-          status: response.status,
-          time: time2 - time1
-        })
+      window.XMLHttpRequest = new Proxy(window.XMLHttpRequest, {
+        construct: (target, args) => {
+          const xhr = new target()
+          let time2 = 0
 
-        const event = new CustomEvent('network-observable-response', {
-          bubbles: true,
-          cancelable: true,
-          detail: {
-            cache: Array.from(this.cache.values())
-          }
-        })
+          const time1 = performance.now()
+          xhr.addEventListener('loadend', () => {
+            time2 = performance.now()
 
-        window.dispatchEvent(event)
+            const time = time2 - time1
+            if (filters) {
+              if (filters.timeShouldBeHigherThan) {
+                if (time < filters.timeShouldBeHigherThan) {
+                  return
+                }
+              }
 
-        return response
+              if (filters.timeShouldBeLowerThan) {
+                if (time > filters.timeShouldBeLowerThan) {
+                  return
+                }
+              }
+
+              if (filters.statusShouldBe) {
+                if (xhr.status !== filters.statusShouldBe) {
+                  return
+                }
+              }
+
+              if (filters.urlShouldBe) {
+                if (xhr.responseURL !== filters.urlShouldBe) {
+                  return
+                }
+              }
+            }
+
+            this.cache.set(xhr.responseURL, {
+              url: xhr.responseURL,
+              status: xhr.status,
+              time,
+              date: new Date().toISOString()
+            })
+
+            const event = new CustomEvent('network-observable-response', {
+              bubbles: true,
+              cancelable: true,
+              detail: {
+                cache: Array.from(this.cache.values())
+              }
+            })
+
+            window.dispatchEvent(event)
+          })
+
+          return xhr
+        }
+      })
+    } catch (error) {
+      console.log('error', error)
+
+      return this.#initialFetch
+    }
+  }
+
+  async #requestWrapper(
+    args: any,
+    target: (url: string, config: any) => Promise<Response>,
+    filters?: WithFilters
+  ) {
+    console.log('args : ', args)
+
+    const [url, config] = args
+    let time2 = 0
+    const time1 = performance.now()
+    const response = await target(url, config).finally(() => {
+      time2 = performance.now()
+    })
+
+    if (filters) {
+      if (filters.timeShouldBeHigherThan) {
+        if (time2 - time1 < filters.timeShouldBeHigherThan) {
+          return response
+        }
+      }
+
+      if (filters.timeShouldBeLowerThan) {
+        if (time2 - time1 > filters.timeShouldBeLowerThan) {
+          return response
+        }
+      }
+
+      if (filters.statusShouldBe) {
+        if (response.status !== filters.statusShouldBe) {
+          return response
+        }
+      }
+
+      if (filters.urlShouldBe) {
+        if (url !== filters.urlShouldBe) {
+          return response
+        }
+      }
+    }
+
+    this.cache.set(url, {
+      url,
+      status: response.status,
+      time: time2 - time1,
+      date: new Date().toISOString()
+    })
+
+    const event = new CustomEvent('network-observable-response', {
+      bubbles: true,
+      cancelable: true,
+      detail: {
+        cache: Array.from(this.cache.values())
       }
     })
+
+    window.dispatchEvent(event)
+
+    return response
   }
 
   #onDestroy() {
-    window.document.removeEventListener(
-      'readystatechange',
-      this.#onReadyStateChange.bind(this, undefined)
-    )
     window.fetch = this.#initialFetch
   }
 
-  #onReadyStateChange = (filters?: WithFilters) => {
-    if (document.readyState === 'complete') {
-      this.#onComplete(filters)
-    }
+  #bindExecute = (filters?: WithFilters) => {
+    console.log('TESTE')
+
+    this.#onComplete(filters)
   }
 }
 

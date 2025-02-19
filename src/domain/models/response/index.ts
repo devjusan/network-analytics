@@ -3,4 +3,5 @@ export type BrowserNetworkObservableResponse = {
   time: number
   status: number
   url: string
+  date: string
 }
