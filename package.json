@@ -1,0 +1,43 @@
+{
+  "name": "network-analytics",
+  "type": "module",
+  "version": "0.0.12",
+  "private": false,
+  "packageManager": "pnpm@9.1.0",
+  "description": "Métodos utilitários da Agrotools",
+  "author": "Agrotools",
+  "license": "MIT",
+  "keywords": [
+    "utils",
+    "agrotools"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typings": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm run build-only",
+    "build-only": "node ./scripts/build.js && tsc --emitDeclarationOnly",
+    "format": "prettier --write src/",
+    "pub:release": "pnpm publish --access public"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
+    "esbuild": "0.24.0",
+    "glob": "11.0.0",
+    "typescript": "4.2.4",
+    "eslint": "^8.47.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-formatter-friendly": "^7.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-vue": "^9.17.0",
+    "eslint-webpack-plugin": "^4.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
