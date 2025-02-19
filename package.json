@@ -1,11 +1,11 @@
 {
   "name": "network-analytics",
   "type": "module",
-  "version": "0.0.12",
+  "version": "0.0.1",
   "private": false,
   "packageManager": "pnpm@9.1.0",
-  "description": "Métodos utilitários da Agrotools",
-  "author": "Agrotools",
+  "description": "Observe your network and get insights",
+  "author": "@devjusan",
   "license": "MIT",
   "keywords": [
     "utils",
