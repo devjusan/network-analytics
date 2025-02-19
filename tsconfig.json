@@ -1,13 +1,12 @@
 {
+  "include": ["src/index.ts"],
   "compilerOptions": {
+    "lib": ["esnext", "dom"],
     "target": "ESNext",
-    "module": "CommonJS",
-    "lib": ["ESNext", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "declaration": true,
     "baseUrl": "./",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true
-  },
-  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+    "outDir": "dist"
+  }
 }

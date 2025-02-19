@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "build": "pnpm run build-only",
-    "build-only": "node ./scripts/build.js",
+    "build-only": "node ./scripts/build.js && tsc --emitDeclarationOnly",
     "format": "prettier --write src/",
     "publish": "pnpm run build && pnpm publish --recursive --tag latest"
   },
