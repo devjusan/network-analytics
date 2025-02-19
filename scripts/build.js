@@ -4,7 +4,7 @@ build({
   entryPoints: ['src/index.ts'],
   outbase: './src',
   outdir: 'dist/',
-  format: 'cjs',
+  format: 'esm',
   platform: 'browser',
   minify: true,
   bundle: true,
