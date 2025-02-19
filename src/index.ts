@@ -2,9 +2,7 @@ import { NetworkObservableService, ServiceOptions } from './application/network-
 
 const service = new NetworkObservableService()
 
-const networkObservableService = {
-  execute: (options: ServiceOptions) => service.execute(options),
+export default {
+  execute: (options?: ServiceOptions) => service.execute(options),
   destroy: () => service.destroy()
 }
-
-export default networkObservableService

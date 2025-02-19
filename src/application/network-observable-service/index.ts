@@ -14,19 +14,21 @@ export class NetworkObservableService {
    *
    * to stop the service, you can call `destroy` method from the service instance.
    */
-  async execute(options: ServiceOptions) {
-    if (options.withFillInputs) {
+  async execute(options?: ServiceOptions) {
+    if (options?.withFillInputs) {
       const inputSetter = new InputSetter()
 
       await inputSetter.setAll(options.withFillInputs)
     }
 
-    this.#service.execute(options.withFilters)
+    this.#service.execute(options?.withFilters)
 
-    return this.#service
+    return Array.from(this.#service.cache.values())
   }
 
   destroy() {
     this.#service.destroy()
+
+    return Array.from(this.#service.cache.values())
   }
 }

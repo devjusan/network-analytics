@@ -1,15 +1,20 @@
-import { build } from 'esbuild'
-import { sync } from 'glob'
+import { build } from 'esbuild';
+import pkg from 'npm-dts';
 
-const entryPoints = sync('./src/**/*.ts')
+
+
+new pkg.Generator({
+  entry: 'src/index.ts',
+  output: 'dist/index.d.ts',
+}).generate();
 
 build({
-  entryPoints,
-  outbase: './src',
-  outdir: 'dist/',
+  entryPoints: ["src/index.ts"],
+  outfile: './dist/index.js',
   format: 'cjs',
   platform: 'browser',
   minify: true,
   bundle: true,
-  tsconfig: './tsconfig.json'
+  treeShaking: true,
+  tsconfig: './tsconfig.json',
 })

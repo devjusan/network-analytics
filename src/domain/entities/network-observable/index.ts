@@ -81,7 +81,10 @@ class NetworkObservable {
   }
 
   #onDestroy() {
-    window.document.removeEventListener('readystatechange', this.#onReadyStateChange.bind(this))
+    window.document.removeEventListener(
+      'readystatechange',
+      this.#onReadyStateChange.bind(this, undefined)
+    )
     window.fetch = this.#initialFetch
   }
 
