@@ -1,4 +1,4 @@
-import { NetworkObservableResponse } from 'src/domain/models/response'
+import { NetworkObservableResponse } from '../../models/response'
 
 export type WithFilters = {
   timeShouldBeHigherThan?: number
@@ -61,8 +61,8 @@ class NetworkObservable {
         }
 
         this.cache.set(url, {
-          time: time2 - time1,
-          ...response.clone()
+          ...response,
+          time: time2 - time1
         })
 
         const event = new CustomEvent('network-observable-response', {

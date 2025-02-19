@@ -1,4 +1,4 @@
-import NetworkObservable, { WithFilters } from 'src/domain/entities/network-observable'
+import NetworkObservable, { WithFilters } from '../../domain/entities/network-observable'
 import InputSetter, { InputSetOptions } from '../utils/input-setter'
 
 export type ServiceOptions = {

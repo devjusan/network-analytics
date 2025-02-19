@@ -1,16 +1,16 @@
-import { WithFilters } from 'src/domain/entities/network-observable';
-import { InputSetOptions } from '../utils/input-setter';
+import { WithFilters } from '../../domain/entities/network-observable'
+import { InputSetOptions } from '../utils/input-setter'
 export declare type ServiceOptions = {
-    /** Service will be executed after fill inputs */
-    withFillInputs?: Array<InputSetOptions>;
-    withFilters?: WithFilters;
-};
+  /** Service will be executed after fill inputs */
+  withFillInputs?: Array<InputSetOptions>
+  withFilters?: WithFilters
+}
 export declare class NetworkObservableService {
-    #private;
-    /** `execute` method starts to observe the network with the given options.
-     *
-     * to stop the service, you can call `destroy` method from the service instance.
-     */
-    execute(options?: ServiceOptions): Promise<unknown[]>;
-    destroy(): unknown[];
+  #private
+  /** `execute` method starts to observe the network with the given options.
+   *
+   * to stop the service, you can call `destroy` method from the service instance.
+   */
+  execute(options?: ServiceOptions): Promise<unknown[]>
+  destroy(): unknown[]
 }
