@@ -1,4 +1,4 @@
-import { BrowserNetworkObservableResponse } from '../../models/response'
+import { BrowserNetworkObservableResponse, CustomProps } from '../../models/response'
 
 export type WithFilters = {
   /** Time in milliseconds */
@@ -7,11 +7,6 @@ export type WithFilters = {
   timeShouldBeLowerThan?: number
   statusShouldBe?: number
   urlShouldBe?: string
-}
-
-export type CustomProps = {
-  /** Usefull when using Micro Frontends. You can set the origin of the request. */
-  locale?: string
 }
 
 class BrowserNetworkObservable {

@@ -1,7 +1,6 @@
-import { BrowserNetworkObservableResponse } from 'src/domain/models/response'
+import { BrowserNetworkObservableResponse, CustomProps } from 'src/domain/models/response'
 import InputSetter, { InputSetOptions } from '../../application/utils/input-setter'
 import BrowserNetworkObservable, {
-  CustomProps,
   WithFilters
 } from '../../domain/entities/browser-network-observable'
 

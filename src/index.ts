@@ -1,5 +1,6 @@
 import { ServiceOptions } from './application/browser-network-observable-service'
-import { CustomProps } from './domain/entities/browser-network-observable'
+import { CustomProps } from './domain/models/response'
+
 import { BNOUserCasesService } from './infra/use-cases'
 
 const service = new BNOUserCasesService()
