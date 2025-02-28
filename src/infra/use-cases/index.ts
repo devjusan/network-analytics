@@ -49,6 +49,10 @@ export class BNOUserCasesService {
   }
 
   async #sendToNetHound(id: string, list: BrowserNetworkObservableResponse[]) {
+    if (!list.length) {
+      return
+    }
+
     const response = await fetch('https://nethound.vercel.app/api/collect', {
       method: 'POST',
       headers: {
