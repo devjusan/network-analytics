@@ -9,6 +9,11 @@ export type WithFilters = {
   urlShouldBe?: string
 }
 
+export type CustomProps = {
+  /** Usefull when using Micro Frontends. You can set the origin of the request. */
+  locale?: string
+}
+
 class BrowserNetworkObservable {
   readonly cache: Map<string, BrowserNetworkObservableResponse> = new Map()
   #initialFetch = window.fetch
@@ -16,19 +21,19 @@ class BrowserNetworkObservable {
 
   constructor() {}
 
-  execute(filters?: WithFilters) {
-    this.#bindExecute(filters)
+  execute(filters?: WithFilters, customProps?: CustomProps) {
+    this.#bindExecute(filters, customProps)
   }
 
   destroy() {
     return this.#onDestroy()
   }
 
-  #onComplete = (filters?: WithFilters) => {
+  #onComplete = (filters?: WithFilters, customProps?: CustomProps) => {
     try {
       window.fetch = new Proxy(window.fetch, {
         apply: async (target, _, args) => {
-          return this.#requestWrapper(args, target, filters)
+          return this.#requestWrapper(args, target, filters, customProps)
         }
       })
 
@@ -72,7 +77,8 @@ class BrowserNetworkObservable {
               url: xhr.responseURL,
               status: xhr.status,
               time,
-              date: new Date().toISOString()
+              date: new Date().toISOString(),
+              ...(customProps || {})
             })
 
             const event = new CustomEvent('network-observable-response', {
@@ -99,7 +105,8 @@ class BrowserNetworkObservable {
   async #requestWrapper(
     args: any,
     target: (url: string, config: any) => Promise<Response>,
-    filters?: WithFilters
+    filters?: WithFilters,
+    customProps?: CustomProps
   ) {
     const [url, config] = args
     let time2 = 0
@@ -138,7 +145,8 @@ class BrowserNetworkObservable {
       url,
       status: response.status,
       time: time2 - time1,
-      date: new Date().toISOString()
+      date: new Date().toISOString(),
+      ...(customProps || {})
     })
 
     const event = new CustomEvent('network-observable-response', {
@@ -165,8 +173,8 @@ class BrowserNetworkObservable {
     return values
   }
 
-  #bindExecute = (filters?: WithFilters) => {
-    this.#onComplete(filters)
+  #bindExecute = (filters?: WithFilters, customProps?: CustomProps) => {
+    this.#onComplete(filters, customProps)
   }
 }
 

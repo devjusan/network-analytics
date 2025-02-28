@@ -1,4 +1,5 @@
 import BrowserNetworkObservable, {
+  CustomProps,
   WithFilters
 } from '../../domain/entities/browser-network-observable'
 import InputSetter, { InputSetOptions } from '../utils/input-setter'
@@ -21,14 +22,14 @@ export class BrowserNetworkObservableService {
    *
    * to stop the service, you can call `destroy` method from the service instance.
    */
-  async execute(options?: ServiceOptions) {
+  async execute(options?: ServiceOptions, customProps?: CustomProps) {
     if (options?.withFillInputs) {
       const inputSetter = new InputSetter()
 
       await inputSetter.setAll(options.withFillInputs)
     }
 
-    this.#service.execute(options?.withFilters)
+    this.#service.execute(options?.withFilters, customProps)
   }
 
   destroy() {

@@ -1,7 +1,7 @@
 {
-  "name": "browser-network-observable",
+  "name": "net-hound",
   "type": "module",
-  "version": "0.0.14",
+  "version": "0.0.1",
   "private": false,
   "packageManager": "pnpm@9.1.0",
   "description": "Observe your browser network tab and get insights",
