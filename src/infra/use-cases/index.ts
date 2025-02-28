@@ -52,7 +52,8 @@ export class BNOUserCasesService {
       body: JSON.stringify({
         id,
         list
-      })
+      }),
+      keepalive: true
     }).then((res) => res.json())
 
     if (!response.ok) {
