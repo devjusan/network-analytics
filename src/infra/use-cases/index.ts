@@ -1,12 +1,9 @@
 import { BrowserNetworkObservableResponse, CustomProps } from 'src/domain/models/response'
-import InputSetter, { InputSetOptions } from '../../application/utils/input-setter'
 import BrowserNetworkObservable, {
   WithFilters
 } from '../../domain/entities/browser-network-observable'
 
 export type ServiceOptions = {
-  /** Service will be executed after fill inputs */
-  withFillInputs?: Array<InputSetOptions>
   withFilters?: WithFilters
   /**
    * Unique identifier for the service.
@@ -24,12 +21,6 @@ export class BNOUserCasesService {
    */
   async execute(options?: ServiceOptions, customProps?: CustomProps) {
     try {
-      if (options?.withFillInputs) {
-        const inputSetter = new InputSetter()
-
-        await inputSetter.setAll(options.withFillInputs)
-      }
-
       this.#service.execute(options?.withFilters, customProps)
     } catch (error) {
       console.error('[ERROR] - [NETHOUND] - ', error)
