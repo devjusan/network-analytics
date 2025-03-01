@@ -14,24 +14,26 @@ export type ServiceOptions = {
 
 export class BNOUserCasesService {
   readonly #service = new BrowserNetworkObservable()
+  #userId: string
 
   /** `execute` method starts to observe the network with the given options.
    *
    * to stop the service, you can call `destroy` method from the service instance.
    */
-  async execute(options?: ServiceOptions, customProps?: CustomProps) {
+  execute(userId: string, options?: ServiceOptions, customProps?: CustomProps) {
     try {
+      this.#userId = userId
       this.#service.execute(options?.withFilters, customProps)
     } catch (error) {
       console.error('[ERROR] - [NETHOUND] - ', error)
     }
   }
 
-  async destroy(id: string) {
+  async destroy() {
     try {
       const destroied = this.#service.destroy()
 
-      await this.#sendToNetHound(id, destroied)
+      await this.#sendToNetHound(this.#userId, destroied)
 
       return destroied
     } catch (error) {

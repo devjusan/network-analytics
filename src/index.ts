@@ -7,32 +7,36 @@ const service = new BNOUserCasesService()
 
 type IMethods = {
   /**
-   * Start to observe the network with the given options.
+   * @param userId
+   * User account identifier. Consult in [NetHound](https://nethound.vercel.app/dashboard) to get the id.
    *
    * @param options
+   * Start to observe the network with the given options.
+   *
+   * @param customProps
+   * Custom properties to send to `NetHound`.
+   *
    * @returns
    */
-  start: (options?: ServiceOptions, customProps?: CustomProps) => Promise<void>
+  start: (userId: string, options?: ServiceOptions, customProps?: CustomProps) => void
   /**
    * Stops the service.
    *
    * When you call this method, we send all user network information to `NetHound`.
    *
-   * Call this method when you unmount the component or when you don't need to observe the network anymore.
+   * Call this method when you unmount your app or when you don't need to observe the network anymore.
    *
-   * @param id
-   * Unique identifier for the service. Consult in [NetHound](https://nethound.vercel.app/dashboard) to get the id.
-   * @returns
+   * **Note:** `Nethound` automatically will stop the service when the user closes the browser tab or refreshes the page.
    */
-  end: (id: string) => Promise<void>
+  end: () => Promise<void>
 }
 
 export default {
-  start: (options?: ServiceOptions, customProps?: CustomProps) =>
-    service.execute(options, customProps),
-  end: async (id: string) => {
+  start: (userId: string, options?: ServiceOptions, customProps?: CustomProps) =>
+    service.execute(userId, options, customProps),
+  end: async () => {
     try {
-      await service.destroy(id)
+      await service.destroy()
     } catch (error) {
       console.error(error.message)
     }
