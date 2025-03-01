@@ -1,13 +1,11 @@
-import { CustomProps } from 'src/domain/models/response'
-import BrowserNetworkObservable, {
-  WithFilters
-} from '../../domain/entities/browser-network-observable'
+import BrowserNetworkObservable from '../../domain/entities/browser-network-observable'
+import { CustomProps, Filters } from '../../domain/models/response'
 import InputSetter, { InputSetOptions } from '../utils/input-setter'
 
 export type ServiceOptions = {
   /** Service will be executed after fill inputs */
   withFillInputs?: Array<InputSetOptions>
-  withFilters?: WithFilters
+  withFilters?: Filters
   /**
    * Unique identifier for the service.
    * We will use this id to only show the network requests for this service.
