@@ -15,7 +15,7 @@ export class BNOUserCasesService {
       this.#userId = userId
       const filters = (await this.#getFilters()) as Filters
 
-      this.#service.execute(filters, customProps)
+      this.#service.execute(filters || {}, customProps)
     } catch (error) {
       console.error('[ERROR] - [NETHOUND] - ', error)
     }
