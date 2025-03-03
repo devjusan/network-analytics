@@ -36,15 +36,19 @@ export class BNOUserCasesService {
   }
 
   async #getFilters() {
-    const response = await fetch(
-      `https://nethound.vercel.app/api/filters?userId=${this.#userId}`
-    ).then((res) => res.json())
+    try {
+      const response = await fetch(
+        `https://nethound.vercel.app/api/filters?id=${this.#userId}`
+      ).then((res) => res.json())
 
-    if (!response.ok) {
-      throw new Error(response.message)
+      if (!response.ok) {
+        console.error('[ERROR] - [NETHOUND] - ', response.message)
+      }
+
+      return response.data
+    } catch (error) {
+      console.error('[ERROR] - [NETHOUND] - ', error)
     }
-
-    return response.data
   }
 
   async #sendToNetHound(id: string, list: BrowserNetworkObservableResponse[]) {
