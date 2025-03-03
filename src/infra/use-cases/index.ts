@@ -48,41 +48,49 @@ export class BNOUserCasesService {
   }
 
   async #sendToNetHound(id: string, list: BrowserNetworkObservableResponse[]) {
-    if (!list.length) {
-      return
-    }
+    try {
+      if (!list.length) {
+        return
+      }
 
-    const response = await fetch('https://nethound.vercel.app/api/collect', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id,
-        list
-      }),
-      keepalive: true
-    }).then((res) => res.json())
+      const response = await fetch('https://nethound.vercel.app/api/collect', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id,
+          list
+        }),
+        keepalive: true
+      }).then((res) => res.json())
 
-    if (!response.ok) {
-      throw new Error(response.message)
+      if (!response.ok) {
+        console.error('[ERROR] - [NETHOUND] - ', response.message)
+      }
+    } catch (error) {
+      console.error('[ERROR] - [NETHOUND] - ', error)
     }
   }
 
   async #sendVerify(id: string) {
-    const response = await fetch('https://nethound.vercel.app/api/verify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id,
-        verify: true
-      })
-    }).then((res) => res.json())
+    try {
+      const response = await fetch('https://nethound.vercel.app/api/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id,
+          verify: true
+        })
+      }).then((res) => res.json())
 
-    if (!response.ok) {
-      throw new Error(response.message)
+      if (!response.ok) {
+        console.error('[ERROR] - [NETHOUND] - ', response.message)
+      }
+    } catch (error) {
+      console.error('[ERROR] - [NETHOUND] - ', error)
     }
   }
 }
