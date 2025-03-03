@@ -15,6 +15,8 @@ export class BNOUserCasesService {
       this.#userId = userId
       const filters = (await this.#getFilters()) as Filters
 
+      await this.#sendVerify(userId)
+
       this.#service.execute(filters || {}, customProps)
     } catch (error) {
       console.error('[ERROR] - [NETHOUND] - ', error)
@@ -23,11 +25,11 @@ export class BNOUserCasesService {
 
   async destroy() {
     try {
-      const destroied = this.#service.destroy()
+      const list = this.#service.destroy()
 
-      await this.#sendToNetHound(this.#userId, destroied)
+      await this.#sendToNetHound(this.#userId, list)
 
-      return destroied
+      return list
     } catch (error) {
       console.error('[ERROR] - [NETHOUND] - ', error)
     }
@@ -42,7 +44,7 @@ export class BNOUserCasesService {
       throw new Error(response.message)
     }
 
-    return response
+    return response.data
   }
 
   async #sendToNetHound(id: string, list: BrowserNetworkObservableResponse[]) {
@@ -60,6 +62,23 @@ export class BNOUserCasesService {
         list
       }),
       keepalive: true
+    }).then((res) => res.json())
+
+    if (!response.ok) {
+      throw new Error(response.message)
+    }
+  }
+
+  async #sendVerify(id: string) {
+    const response = await fetch('https://nethound.vercel.app/api/verify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id,
+        verify: true
+      })
     }).then((res) => res.json())
 
     if (!response.ok) {
