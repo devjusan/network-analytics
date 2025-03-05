@@ -64,8 +64,8 @@ class BrowserNetworkObservable {
               status: xhr.status,
               time,
               date: new Date().toISOString(),
-              ...(customProps || {}),
-              ...(filters || {})
+              filters,
+              ...(customProps || {})
             })
 
             const event = new CustomEvent('network-observable-response', {
@@ -95,7 +95,7 @@ class BrowserNetworkObservable {
     filters?: Filters,
     customProps?: CustomProps
   ) {
-    const [url, config] = args
+    const [url, config] = args as [string, any]
     let time2 = 0
     const time1 = performance.now()
     const response = await target(url, config).finally(() => {
@@ -122,7 +122,7 @@ class BrowserNetworkObservable {
       }
 
       if (filters.urlShouldBe) {
-        if (url !== filters.urlShouldBe) {
+        if (url.includes(filters.urlShouldBe)) {
           return response
         }
       }
@@ -133,8 +133,8 @@ class BrowserNetworkObservable {
       status: response.status,
       time: time2 - time1,
       date: new Date().toISOString(),
-      ...(customProps || {}),
-      ...(filters || {})
+      filters,
+      ...(customProps || {})
     })
 
     const event = new CustomEvent('network-observable-response', {
