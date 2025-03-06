@@ -33,31 +33,6 @@ class BrowserNetworkObservable {
             time2 = performance.now()
 
             const time = time2 - time1
-            if (filters) {
-              if (filters.timeShouldBeHigherThan) {
-                if (time < filters.timeShouldBeHigherThan) {
-                  return
-                }
-              }
-
-              if (filters.timeShouldBeLowerThan) {
-                if (time > filters.timeShouldBeLowerThan) {
-                  return
-                }
-              }
-
-              if (filters.statusShouldBe) {
-                if (xhr.status !== filters.statusShouldBe) {
-                  return
-                }
-              }
-
-              if (filters.urlShouldBe) {
-                if (xhr.responseURL !== filters.urlShouldBe) {
-                  return
-                }
-              }
-            }
 
             this.cache.set(xhr.responseURL, {
               url: xhr.responseURL,
@@ -101,32 +76,6 @@ class BrowserNetworkObservable {
     const response = await target(url, config).finally(() => {
       time2 = performance.now()
     })
-
-    if (filters) {
-      if (filters.timeShouldBeHigherThan) {
-        if (time2 - time1 < filters.timeShouldBeHigherThan) {
-          return response
-        }
-      }
-
-      if (filters.timeShouldBeLowerThan) {
-        if (time2 - time1 > filters.timeShouldBeLowerThan) {
-          return response
-        }
-      }
-
-      if (filters.statusShouldBe) {
-        if (response.status !== filters.statusShouldBe) {
-          return response
-        }
-      }
-
-      if (filters.urlShouldBe) {
-        if (url.includes(filters.urlShouldBe)) {
-          return response
-        }
-      }
-    }
 
     this.cache.set(url, {
       url,
