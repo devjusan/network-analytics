@@ -60,12 +60,14 @@ export class BNOUserCasesService {
       const response = await fetch('https://nethound.vercel.app/api/collect', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'nethound-signature': '0x0f5d2fb29fb7d3cfee444a200298f468f6e3b7f'
         },
         body: JSON.stringify({
           id,
           list
         }),
+
         keepalive: true
       }).then((res) => res.json())
 
@@ -82,7 +84,8 @@ export class BNOUserCasesService {
       const response = await fetch('https://nethound.vercel.app/api/verify', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'nethound-signature': '0x0f5d2fb29fb7d3cfee444a200298f468f6e3b7f'
         },
         body: JSON.stringify({
           id,
