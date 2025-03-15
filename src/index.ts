@@ -11,7 +11,7 @@ const service = new BNOUserCasesService()
 type IMethods = {
   /**
    * @param userId
-   * User account identifier. Consult in [NetHound](https://nethound.vercel.app/dashboard) to get the id.
+   * User account identifier. Consult in [NetHound](https://nethound.co/dashboard) to get the id.
    *
    * @param customProps
    * Custom properties to send to `NetHound`.

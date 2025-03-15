@@ -37,9 +37,9 @@ export class BNOUserCasesService {
 
   async #getFilters() {
     try {
-      const response = await fetch(
-        `https://nethound.vercel.app/api/filters?id=${this.#userId}`
-      ).then((res) => res.json())
+      const response = await fetch(`https://nethound.co/api/filters?id=${this.#userId}`).then(
+        (res) => res.json()
+      )
 
       if (!response.ok) {
         console.error('[ERROR] - [NETHOUND] - ', response.message)
@@ -57,7 +57,7 @@ export class BNOUserCasesService {
         return
       }
 
-      const response = await fetch('https://nethound.vercel.app/api/collect', {
+      const response = await fetch('https://nethound.co/api/collect', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -80,7 +80,7 @@ export class BNOUserCasesService {
 
   async #sendVerify(id: string) {
     try {
-      const response = await fetch('https://nethound.vercel.app/api/verify', {
+      const response = await fetch('https://nethound.co/api/verify', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
